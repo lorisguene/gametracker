@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS players (
     level INT
 );
 
-CREATE TABLE IF NOT EXISTS transactions (
+CREATE TABLE IF NOT EXISTS scores (
     score_id VARCHAR(20) PRIMARY KEY,
     player_id INT,
     game VARCHAR(100),
