@@ -1,12 +1,12 @@
 services:
   db:
     image: mysql:8.0
-    container_name: gametracker_mysql
+    container_name: game_mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: gametracker_db
-      MYSQL_USER: gametracker_user
-      MYSQL_PASSWORD: gametracker_pass
+      MYSQL_DATABASE: game_db
+      MYSQL_USER: game_user
+      MYSQL_PASSWORD: game_pass
     ports:
       - "3306:3306"
     volumes:
@@ -20,7 +20,7 @@ services:
 
   app:
     build: .
-    container_name: gametracker_app
+    container_name: game_app
     volumes:
       - ./data:/app/data
       - ./output:/app/output
@@ -29,9 +29,9 @@ services:
     environment:
       DB_HOST: db
       DB_PORT: 3306
-      DB_NAME: gametracker_db
-      DB_USER: gametracker_user
-      DB_PASSWORD: gametracker_pass
+      DB_NAME: game_db
+      DB_USER: game_user
+      DB_PASSWORD: game_pass
     depends_on:
       db:
         condition: service_healthy
