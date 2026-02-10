@@ -16,9 +16,11 @@ def transform_players(df: pd.DataFrame) -> pd.DataFrame:
 
     # 1. Supprimer doublons
     df = df.drop_duplicates(subset=["player_id"])
+    
 
     # 2. Nettoyer les username
     df["username"] = df["username"].astype(str).str.strip()
+    df = df.drop_duplicates(subset=["username"])
 
     # 3. Convertir les dates
     df["registration_date"] = pd.to_datetime(
@@ -52,6 +54,8 @@ def transform_scores(df: pd.DataFrame, valid_player_ids: set) -> pd.DataFrame:
 
     # 1. Supprimer doublons
     df = df.drop_duplicates(subset=["score_id"])
+    
+
 
     # 2. Conversion des types
     df["played_at"] = pd.to_datetime(df["played_at"], errors="coerce")
@@ -63,6 +67,11 @@ def transform_scores(df: pd.DataFrame, valid_player_ids: set) -> pd.DataFrame:
 
     # 4. Filtrer les player_id invalides
     df = df[df["player_id"].isin(valid_player_ids)]
+
+    df = (
+        df.sort_values(["score", "score_id"], ascending=[False, True])
+        .drop_duplicates(subset=["player_id", "game", "played_at"], keep="first")
+    )
 
     print(f"Transforme {len(df)} scores")
     return df
