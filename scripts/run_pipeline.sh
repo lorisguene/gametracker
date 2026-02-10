@@ -9,7 +9,7 @@ echo "[2/4] Initialisation des tables..."
 mysql --skip-ssl -h db -u root -proot game_db < scripts/init-db.sql
 
 echo "[3/4] Exécution du pipeline ETL Python..."
-python3 src/main.py
+python3 -m src.main
 
 echo "[4/4] Génération du rapport..."
 python3 -c "from src.report import generate_report; generate_report()"
